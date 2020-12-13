@@ -1,0 +1,49 @@
+from tkinter import *
+import pandas as pd
+from moviedata1 import *
+
+
+    
+win=Tk()
+win.geometry('700x500')
+win.title('Netflix Hub')
+win.config(bg='black')
+
+L1=Label(win,text='NetFlix Hub')
+L1.config(font=('avant garde bold',40),bg='Red')
+L1.pack(pady=15)
+
+l2=Label(win,text ='Enter The Movie')
+l2.config(font=('avant garde bold',20),bg='Red')
+l2.place(x=243,y=150)
+
+E1=Entry(win)
+E1.config(font=('avant garde bold',20))
+E1.place(x=190,y=215)
+
+def show():
+    
+    df = pd.read_csv('MoviesOnStreamingPlatforms_updated.csv')
+    m = E1.get()
+    
+    title = df.loc[(df.Title == m) , ['Title']]
+    IMDb = df.loc[(df.Title == m) , ['IMDb']]
+    Year = df.loc[(df.Title == m) , ['Year']]
+    Director = df.loc[(df.Title == m) , ['Directors']]
+    
+    
+    if(title.empty):
+        l3.config(text = 'Movie Not Found')
+        l4.config(text = '')
+        l5.config(text = '')
+        l6.config(text = '')
+    else:
+        l3.config(text = title)
+        l4.config(text = IMDb)
+        l5.config(text = Year)
+        l6.config(text = Director)
+  
+    
+B1 = Button(win, text = 'Show',command=show)
+B1.config(font=('',15),fg='Black', bg='red')
+B1.place(x=304,y=280)
